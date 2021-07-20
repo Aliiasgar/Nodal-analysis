@@ -1,0 +1,80 @@
+import numpy as np 
+import pandas as pd 
+import matplotlib.pyplot as plt 
+%matplotlib inline
+
+# first lets create ab IPR 
+p_ipr, q_ipr, q_tpr, p_190, p_2375, p_2875 = list(), list(), list(), list(), list(), list()
+
+print("IPR Curve :-\n")
+m = input("How many pressure and flow rate values you want to enter? ")
+
+print("\nEnter the Pressure values:\n")
+for i in range(int(m)):
+  pn = input()
+  p_ipr.append(float(pn))
+  
+
+print("\nEnter the Flow Rate values:\n ")
+for i in range(int(m)):
+  hn = input()
+  q_ipr.append(float(hn))
+  
+
+ipr_df=pd.DataFrame({'Pwf':p_ipr,'Q':q_ipr})
+
+print('Your Entered Values are as follows \n')
+print(ipr_df)
+
+plt.figure(figsize=(10,5))
+plt.plot(q_ipr,p_ipr,marker='o')
+plt.xlabel('Q(Mscf/D)')
+plt.ylabel('Pwf(psi)')
+plt.title('IPR')
+plt.grid()
+plt.show()
+
+print('Now Enter Data for VLP\n')
+print("VLP Curve :-\n")
+n = input("How many values you want to enter?")
+
+print("\nEnter the Production Rate:\n")
+for i in range(int(n)):
+  qn = input()
+  q_tpr.append(float(qn))
+  
+
+print("\nEnter the Pressure Drop for 1.90-in Tubing:\n")
+for i in range(int(n)):
+  p1n = input()
+  p_190.append(float(p1n))
+  
+
+print("\nEnter the Pressure Drop for 2.375-in Tubing:\n")
+for i in range(int(n)):
+  p2n = input()
+  p_2375.append(float(p2n))
+ 
+
+print("\nEnter the Pressure Drop for 2.875-in Tubing:\n")
+for i in range(int(n)):
+  p3n = input()
+  p_2875.append(float(p3n))
+  
+
+tpr_df=pd.DataFrame({'Q':q_tpr,'P190':p_190,'P2375':p_2375,'P2875':p_2875})
+
+print('Your Entered Values are as follows \n')
+print(tpr_df)
+
+#plotting of IPR and VLP 
+plt.figure(figsize=(10,5))
+plt.plot(q_ipr,p_ipr,marker='o')
+plt.plot(q_tpr,p_190,label='TPR for 1.90 Tubing',marker='*',ms=7)
+plt.plot(q_tpr,p_2375,label='TPR for 2.375 Tubing',marker='*',ms=7)
+plt.plot(q_tpr,p_2875,label='TPR for 2.875 Tubing ',marker='*',ms=7)
+plt.xlabel('Q(Mscf/D)')
+plt.ylabel("Pwf(psia)")
+plt.grid()
+plt.legend()
+plt.show()
